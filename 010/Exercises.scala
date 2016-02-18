@@ -2,8 +2,8 @@
 // 
 // Advanced Programming, Exercises by A. Wąsowski, IT University of Copenhagen
 //
-// AUTHOR1: Adrian Brink - adbr@itu.dk
-// AUTHOR2: Andrea Bitzili - abit@itu.dk
+// AUTHOR1: Andrea Bitzili - abit@itu.dk
+// AUTHOR2: Adrian Brink - adbr@itu.dk
 //
 // Write names and ITU email addresses of both group members that contributed to
 // the solution of the exercise (in alphabetical order by family name).
