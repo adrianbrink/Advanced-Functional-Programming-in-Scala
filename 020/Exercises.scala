@@ -1,4 +1,4 @@
-// IN PROGRESS
+﻿// IN PROGRESS
 //
 // Advanced Programming, Exercises by A. Wąsowski, IT University of Copenhagen
 //
@@ -56,7 +56,7 @@ object List {
     case Cons(_, xs) => xs
   }
 
-  // Exercise 3
+         // dsajdlas  // Exercise 3
 
   def setHead[A] (as: List[A], newHead: A) : List[A] = as match {
     case Nil => Nil
