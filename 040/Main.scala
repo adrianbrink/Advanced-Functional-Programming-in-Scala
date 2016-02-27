@@ -7,7 +7,7 @@ import fpinscala.laziness._
 import fpinscala.laziness.Stream._
 
 // this is how we do simple interactive testing
-
+import exercises.laziness._
 val l1 :Stream[Int] = Empty
 val l2 :Stream[Int] = empty
 

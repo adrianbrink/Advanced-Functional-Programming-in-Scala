@@ -1,4 +1,4 @@
-
+import collection.immutable.List
 
 sealed trait RNG{
   def nextInt: (Int, RNG)
@@ -14,12 +14,11 @@ case class SimpleRng(seed: Long) extends RNG{
   }
 
 }
-
 object RNG {
   def nonNegativeInt(rng: RNG): (Int, RNG) ={
     rng.nextInt match {
-      case (y, rn) if( y > 0 && y < Int.MaxValue) => (y, rn)
-      case (y, rn) => nonNegativeInt(rn)
+      case (y, rn) if( y > 0 ) => (y, rn)
+      case (y, rn) => (-y + 1, rn )
     }
   }
   //def double(rng: RNG): (Double, RNG) ={
@@ -51,12 +50,28 @@ object RNG {
   def unit[A](a: A): Rand[A] = rng => (a,rng)
   def map2[A,B,C](ra: Rand[A], rb: Rand[B])(f: (A, B) => C): Rand[C] ={
      rand => ra(rand) match {
-       case (x, y) => rb(rand) match {
-         case (x1, y1) => (f(x,x1),rand)
+       case (x, y) => rb(y) match {
+         case (x1, y1) => (f(x,x1),y1)
        }
      }
   }
   def double(rng: RNG): Rand[Double] = {
     map(unit(nonNegativeInt(rng)._1.toDouble))(i => i - (i.toInt) )
   }
+  def sequence[A](fs: List[Rand[A]]): Rand[List[A]] ={
+    fs.foldRight((rng => (Nil, rng)): Rand[collection.immutable.List[A]])((v1, v2) => map2(v1, v2)(_ :: _))
+  }
+
+  def flatMap[A,B](f: Rand[A])(g: A => Rand[B]): Rand[B] ={
+    rand => f(rand) match {
+      case (a, b) =>  g(a)(b) match {
+        case (c, d) => (c, d)
+      }
+    }
+  }
+}
+object app extends App{
+
+
+
 }

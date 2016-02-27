@@ -1,9 +1,8 @@
 
 package exercises.laziness {
+
   case class some[+A](get: A) extends Option[A]
-
   case object None extends Option[Nothing]
-
   sealed trait Option[+A] {
     def map[B](f: A => B): Option[B] = {
       this match {
@@ -214,10 +213,9 @@ package exercises.laziness {
   }
 
 
-  package test {
-class k
+
     object mn {
-      import a._
+
 
       def main(args: Array[String]): Unit = {
         Stream.take(Stream(1, 2, 3, 4, 5, 6), 2).toList
@@ -232,13 +230,7 @@ class k
 
     }
 
-  }
-
-}
-
-object a {
-
-
 
 
 }
+

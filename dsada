@@ -1,0 +1,67 @@
+[33mcommit 6cecfe8f25a668ad0333b42fff59991bd3c3858a[m
+Author: Andreas <abit@itu.dk>
+Date:   Sat Feb 27 14:23:59 2016 +0100
+
+    Adds all the exercises which have passed the tests, except 10-11.
+
+[33mcommit 2129e7eeada98816463bf36b1a819690bb6a91e8[m
+Author: Andreas <abit@itu.dk>
+Date:   Tue Feb 23 13:24:56 2016 +0100
+
+    Bloop
+
+[33mcommit dff16f3ef45bb03cae409e439bc63bd09ed22e56[m
+Author: Andreas <abit@itu.dk>
+Date:   Tue Feb 23 13:14:26 2016 +0100
+
+    test
+    
+    daskldjas
+
+[33mcommit 53d535ed9b25a5847c3489f379c41448998060e1[m
+Author: Adrian Brink <adrianbrink@users.noreply.github.com>
+Date:   Mon Feb 22 17:12:00 2016 +0100
+
+    Add exercise sheets for first four weeks
+
+[33mcommit 846b6729fe76b08cb9d23e0b08b978dd30438b92[m
+Author: Adrian Brink <adrianbrink@users.noreply.github.com>
+Date:   Thu Feb 18 10:43:40 2016 +0100
+
+    Update README.md
+
+[33mcommit c3190de8d6ba37735b0f47910d5655ee7a4b7f6e[m
+Author: Adrian Brink <adrianbrink@users.noreply.github.com>
+Date:   Thu Feb 18 10:43:14 2016 +0100
+
+    Create README.md
+
+[33mcommit f2d7c91811fab139c5191d24f9b97e712d38d95f[m
+Author: Adrian Brink <adrianbrink@users.noreply.github.com>
+Date:   Thu Feb 18 10:33:48 2016 +0100
+
+    Add given files
+
+[33mcommit ab2a5d603ecf2feab452dc4d2202884f5f45da92[m
+Author: Adrian Brink <adrianbrink@users.noreply.github.com>
+Date:   Thu Feb 18 10:33:35 2016 +0100
+
+    Assignment 2, still work in progress
+
+[33mcommit a2036b51c3220760f54d12c37d72d918ca090eed[m
+Author: Adrian Brink <adrianbrink@users.noreply.github.com>
+Date:   Thu Feb 18 10:32:34 2016 +0100
+
+    Update author names to be in alphabetical order by family name
+
+[33mcommit fc7e32268e0076c0dc60a49db1d8c1a12d24bb2a[m
+Author: Adrian Brink <adrianbrink@users.noreply.github.com>
+Date:   Thu Feb 18 10:30:36 2016 +0100
+
+    Final solutions for Exercise 1, already submitted on learnit
+
+[33mcommit f12af3b75a7b4e1c47adb3046c4d2b4895ec33f5[m
+Author: Adrian Brink <adrianbrink@users.noreply.github.com>
+Date:   Thu Feb 18 10:20:22 2016 +0100
+
+    Add gitignore file for Scala, OSX, SublimeText, Windows and Intellij
