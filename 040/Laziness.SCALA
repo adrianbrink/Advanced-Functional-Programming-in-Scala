@@ -1,20 +1,20 @@
 
 package exercises.laziness {
 
-  case class some[+A](get: A) extends Option[A]
+  case class Some[+A](get: A) extends Option[A]
   case object None extends Option[Nothing]
   sealed trait Option[+A] {
     def map[B](f: A => B): Option[B] = {
       this match {
         case None => None
-        case some(get) => some(f(get))
+        case Some(get) => Some(f(get))
       }
     }
 
 
     def flatMap[B](f: A => Option[B]): Option[B] = {
       this match {
-        case some(x) => f(x)
+        case Some(x) => f(x)
         case None => None
       }
     }
@@ -22,17 +22,17 @@ package exercises.laziness {
     def getOrElse[B >: A](ob: => B): B = {
       this match {
         case None => ob
-        case some(x) => x
+        case Some(x) => x
       }
     }
 
     def orElse[B >: A](ob: => Option[B]): Option[B] = {
-      map(x => some(x)).getOrElse(ob)
+      map(x => Some(x)).getOrElse(ob)
     }
 
     def filter(f: A => Boolean): Option[A] = {
 
-      flatMap(x => if (f(x)) some(x) else None)
+      flatMap(x => if (f(x)) Some(x) else None)
     }
   }
 
@@ -51,7 +51,7 @@ package exercises.laziness {
 
     def map[A, B](as: Stream[A])(f: A => B): Stream[B] = {
       unfold(as)(x => x match {
-        case Cons(h, t) => some((f(h()), t()))
+        case Cons(h, t) => Some((f(h()), t()))
         case Empty => None
       })
     }
@@ -60,7 +60,7 @@ package exercises.laziness {
       unfold((as, n))(x => x match {
         case (Empty, _) => None
         case (Cons(h, t), 0) => None
-        case (Cons(h, t), y) => some(h(), (t(), y - 1))
+        case (Cons(h, t), y) => Some(h(), (t(), y - 1))
       })
     }
 
@@ -68,7 +68,7 @@ package exercises.laziness {
 
     def unfold[A, S](z: S)(f: S => Option[(A, S)]): Stream[A] = {
       f(z) match {
-        case some((a, b)) => cons(a, unfold(b)(f))
+        case Some((a, b)) => cons(a, unfold(b)(f))
         case none => empty
       }
     }
@@ -83,18 +83,18 @@ package exercises.laziness {
     }
 
     def fibsUnfold: Stream[Int] = {
-      unfold((0, 1))((x) => some(x._1 + x._2, (x._2, x._1 + x._2)))
+      unfold((0, 1))((x) => Some(x._1 + x._2, (x._2, x._1 + x._2)))
     }
 
     def fromUnfold(n: Int): Stream[Int] = {
-      unfold(n)((x) => some(x, x + 1))
+      unfold(n)((x) => Some(x, x + 1))
     }
 
     def constantUnfold[A](a: A): Stream[A] = {
-      unfold(a)((x) => some(x, x))
+      unfold(a)((x) => Some(x, x))
     }
 
-    def onesUnfold: Stream[Int] = unfold(1)((x) => some(1, 1))
+    def onesUnfold: Stream[Int] = unfold(1)((x) => Some(1, 1))
 
     def empty[A]: Stream[A] = Empty
 
@@ -105,31 +105,31 @@ package exercises.laziness {
 
     def takeWhile[A](as: Stream[A])(p: A => Boolean): Stream[A] = {
       unfold(as)(x => x match {
-        case Cons(h, t) if (p(h())) => some((h(), t()))
+        case Cons(h, t) if (p(h())) => Some((h(), t()))
         case Empty => None
-        //case Cons(h,Cons(h1,t)) => some()
+        //case Cons(h,Cons(h1,t)) => Some()
       })
     }
 
     def startsWith[A](as: Stream[A], s: Stream[A]): Boolean = {
       unfold((as, s))(x => x match {
-        case (Cons(h, t), Cons(h1, t1)) => some((h(), h1()), (t(), t1()))
+        case (Cons(h, t), Cons(h1, t1)) => Some((h(), h1()), (t(), t1()))
         case _ => None
       }).filter(y => y._1.equals(y._2)).forAll(z => z !=(null, null))
     }
 
     def zipWith[A, B](as: Stream[A], bs: Stream[B])(f: (A, B) => B): Stream[B] = {
       unfold((as, bs))(x => x match {
-        case (Cons(h, t), Cons(h1, t1)) => some(f(h(), h1()), (t(), t1()))
+        case (Cons(h, t), Cons(h1, t1)) => Some(f(h(), h1()), (t(), t1()))
         case _ => None
       })
     }
 
     def zipAll[A, B](as: Stream[A], bs: Stream[B]): Stream[(Option[A], Option[B])] = {
       unfold((as, bs))(x => x match {
-        case ((Cons(h, t), Cons(h1, t1))) => some((some(h()), some(h1())), ((t(), t1())))
-        case ((Empty, Cons(h, t))) => some((None, some(h())), (Empty, t()))
-        case ((Cons(h, t)), Empty) => some(((some(h())), None), (t(), Empty))
+        case ((Cons(h, t), Cons(h1, t1))) => Some((Some(h()), Some(h1())), ((t(), t1())))
+        case ((Empty, Cons(h, t))) => Some((None, Some(h())), (Empty, t()))
+        case ((Cons(h, t)), Empty) => Some(((Some(h())), None), (t(), Empty))
         case _ => None
       })
     }
@@ -203,9 +203,9 @@ package exercises.laziness {
 
     def tails: Stream[Stream[A]] = {
       Stream.unfold((this, None: Option[A]))(x => x match {
-        case (Cons(h, t), some(x)) => some(Cons(h, t), (t(), some(h())))
-        case (Cons(h, t), None) => some(Cons(h, t), (t(), some(h())))
-        case (Empty, some(x)) => some(Stream(), (empty, None))
+        case (Cons(h, t), Some(x)) => Some(Cons(h, t), (t(), Some(h())))
+        case (Cons(h, t), None) => Some(Cons(h, t), (t(), Some(h())))
+        case (Empty, Some(x)) => Some(Stream(), (empty, None))
         case (Empty, None) => None
       })
     }
@@ -222,7 +222,7 @@ package exercises.laziness {
       }
       def test[A](as: Stream[A], s: Stream[A]): Stream[(A, A)] = {
         Stream.unfold((as, s))(x => x match {
-          case (Cons(h, t), Cons(h1, t1)) => some((h(), h1()), (t(), t1()))
+          case (Cons(h, t), Cons(h1, t1)) => Some((h(), h1()), (t(), t1()))
           case _ => None
         })
       }
