@@ -5,7 +5,6 @@ import scala.annotation.tailrec
 class OrderedPoint() extends P with scala.math.Ordered[P]{
 
  def this(x: Int, y:Int){
-
       this()
       this.x = x
       this.y = y
@@ -107,9 +106,9 @@ object Option {
     means(xs) flatMap (m => means(xs map (x => math.pow(x - m, 2))))
   }
 
-  def sequence[A](as: List[Option[A]]) : Option[List[A]]= {
+  // def sequence[A](as: List[Option[A]]) : Option[List[A]]= {
 
-  }
+  // }
 }
 
 object Test extends App{
