@@ -1,4 +1,4 @@
-﻿// IN PROGRESS
+// FINAL
 //
 // Advanced Programming, Exercises by A. Wąsowski, IT University of Copenhagen
 //
@@ -194,10 +194,10 @@ object List {
 
   // Exercise 22
 
-  def pascal (n :Int) : List[Int] = {
-    def go(l: Int, r: Int) :Int = {
-    }
-  }
+  // def pascal (n :Int) : List[Int] = {
+  //   def go(l: Int, r: Int) :Int = {
+  //   }
+  // }
   // a test: pascal (4) = Cons(1,Cons(3,Cons(3,Cons(1,Nil))))
 }
 

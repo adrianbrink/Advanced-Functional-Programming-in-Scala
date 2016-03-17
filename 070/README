@@ -1,0 +1,31 @@
+This week we are starting to use sbt (which is a project management tool
+similar to maven).  We do not make any serious use of it yes.  We shall use it
+more in the coming weeks, but for now we just want to get acquainted with it.
+
+Installing SBT: http://www.scala-sbt.org/release/docs/Setup.html
+
+Call the following sbt commands to tinker with this project:
+
+sbt compile      - to build the project
+sbt console      - to drop into REPL with a suitable classpath setup for your project
+sbt clean        - remove sbt generated files
+
+After the console command, the REPL is loaded with a suitably setup CLASSPATH.
+So you can for example do:
+
+> import adpro.Exercise85_TestCases._
+
+The REPL will find all the class files (with sbt we shall almost always
+compile our scala files, and load the objects into the REPL from class files.
+Then we can use the REPL to interact with them and debug stuff.)
+
+The following two targets will become more useful in the future weeks.
+
+sbt test         - to run the scalacheck tests
+sbt test:console - drop into REPL with classpath configured for testing classes
+
+IntelliJ people will findout that IntelliJ can somehow import the build.sbt file
+to offer the same services (and perhaps they already used them implicitly).  I
+do not know about Eclipse unfortunately.
+
+You will find the source files in src/main/scala/* in sbt managed projects.
