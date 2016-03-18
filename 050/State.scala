@@ -16,26 +16,55 @@ object RNG {
 
   // Exercise 1 (CB 6.1)
 
-  // def nonNegativeInt(rng: RNG): (Int, RNG) = { ...
+  def nonNegativeInt(rng: RNG): (Int, RNG) = {
+    val (i, s) = rng.nextInt
+    if (i < 0) {
+      (-(i + 1), s)
+    } else {
+      (i, s)
+    }
+  }
 
   // Exercise 2 (CB 6.2)
 
-  // def double(rng: RNG): (Double, RNG) = { ...
+  def double(rng: RNG): (Double, RNG) = {
+    val (i, s) = nonNegativeInt(rng)
+    (i / (Int.MaxValue.toDouble + 1), r)
+  }
 
   // Exercise 3 (CB 6.3)
 
-  // def intDouble(rng: RNG): ((Int, Double), RNG) = { ...
+  def intDouble(rng: RNG): ((Int, Double), RNG) = {
+    val (i1, s1) = rng.nextInt
+    val (d1, s2) = double(s1)
+    ((i1, d1), s2)
+  }
 
-  // def doubleInt(rng: RNG): ((Double, Int), RNG) = { ...
+  def doubleInt(rng: RNG): ((Double, Int), RNG) = {
+    val ((i, d), r) = intDouble(rng)
+    ((d, i), r)
+  }
 
-  // def double3(rng: RNG): ((Double, Double, Double), RNG) = { ...
+  def double3(rng: RNG): ((Double, Double, Double), RNG) = {
+    val (d1, r1) = double(rng)
+    val (d2, r2) = double(r1)
+    val (d3, r3) = double(r2)
+    ((d1, d2, d3), r3)
+  }
 
   // def boolean(rng: RNG): (Boolean, RNG) =
   //  rng.nextInt match { case (i,rng2) => (i%2==0,rng2) }
 
   // Exercise 4 (CB 6.4)
 
-  // def ints(count: Int)(rng: RNG): (List[Int], RNG) =
+  def ints(count: Int)(rng: RNG): (List[Int], RNG) = {
+    if (count == 0) { (List(), rng) }
+    else {
+      val (x, s1) = rng.nextInt
+      val (xs, s2) = ints(count - 1)(s1)
+      (x::xs, s2)
+    }
+  }
 
   // There is something terribly repetitive about passing the RNG along
   // every time. What could we do to eliminate some of this duplication
@@ -57,39 +86,59 @@ object RNG {
   // def nonNegativeEven: Rand[Int] = map(nonNegativeInt)(i => i - i % 2)
 
   // Exercise 5 (CB 6.5)
-
-  // val _double: Rand[Double] =
+  val _double: Rand[Double] = {
+    map(nonNegativeInt)(_ / (Int.MaxValue.toDouble + 1))
+  }
 
   // Exercise 6 (CB 6.6)
-
-  // def map2[A,B,C](ra: Rand[A], rb: Rand[B])(f: (A, B) => C): Rand[C] =
+  def map2[A,B,C](ra: Rand[A], rb: Rand[B])(f: (A, B) => C): Rand[C] = {
+    rng => {
+      val (a, s1) = ra(rng)
+      val (b, s2) = rb(s1)
+      (f(a, b), s2)
+    }
+  }
 
   // this is given in the book
+  def both[A,B](ra: Rand[A], rb: Rand[B]): Rand[(A,B)] =
+   map2(ra, rb)((_, _))
 
-  // def both[A,B](ra: Rand[A], rb: Rand[B]): Rand[(A,B)] =
-  //  map2(ra, rb)((_, _))
+  val randIntDouble: Rand[(Int, Double)] = both(int, double)
 
-  // val randIntDouble: Rand[(Int, Double)] = both(int, double)
-
-  // val randDoubleInt: Rand[(Double, Int)] = both(double, int)
+  val randDoubleInt: Rand[(Double, Int)] = both(double, int)
 
   // Exercise 7 (6.7)
 
-  // def sequence[A](fs: List[Rand[A]]): Rand[List[A]] =
+  def sequence[A](fs: List[Rand[A]]): Rand[List[A]] = {
+    fs.foldRight(unit(List[A]()))((f, acc) => map2(f, acc)(_::_))
+  }
 
   // def _ints(count: Int): Rand[List[Int]] = ...
 
   // Exercise 8 (6.8)
+  def flatMap[A,B](f: Rand[A])(g: A => Rand[B]): Rand[B] = {
+    rng => {
+      val (a, s1) = f(rng)
+      g(a)(s1)
+    }
+  }
 
-  // def flatMap[A,B](f: Rand[A])(g: A => Rand[B]): Rand[B] = ...
-
-  // def nonNegativeLessThan(n: Int): Rand[Int] = { ...
+  def nonNegativeLessThan(n: Int): Rand[Int] = {
+    flatMap(nonNegativeInt) { i => {
+      val mod = i % n
+      if (i + (n-1) - mod >= 0) unit(mod) else nonNegativeLessThan(n)
+      }
+    }
+  }
 
   // Exercise 9 (6.9)
+  def _map[A,B](s: Rand[A])(f: A => B): Rand[B] = {
+    flatMap(s)(a => unit(f(a)))
+  }
 
-  // def _map[A,B](s: Rand[A])(f: A => B): Rand[B] =
-
-  // def _map2[A,B,C](ra: Rand[A], rb: Rand[B])(f: (A, B) => C): Rand[C] =
+  def _map2[A,B,C](ra: Rand[A], rb: Rand[B])(f: (A, B) => C): Rand[C] = {
+    flatMap(ra)(a => map(rb)(b => f(a, b)))
+  }
 }
 
 import State._
@@ -97,13 +146,20 @@ import State._
 case class State[S, +A](run: S => (A, S)) {
 
   // Exercise 10 (6.10)
+  def map[B](f: A => B): State[S, B] = {
+    flatMap(a => unit(f(a)))
+  }
 
-  // def map[B](f: A => B): State[S, B] = ...
+  def map2[B,C](sb: State[S, B])(f: (A, B) => C): State[S, C] = {
+    flatMap(a => sb.map(b => f(a, b)))
+  }
 
-  // def map2[B,C](sb: State[S, B])(f: (A, B) => C): State[S, C] = ...
-
-  // def flatMap[B](f: A => State[S, B]): State[S, B] = State(s => { ...
-
+  def flatMap[B](f: A => State[S, B]): State[S, B] = {
+    State(s => {
+      val (a, s1) = run(s)
+      f(a).run(s1)
+    })
+  }
 }
 
 object State {
@@ -137,12 +193,7 @@ object State {
   // Exercise 12
 
   // val random_integers = ...
-
 }
-
-
-
-
 
 
 sealed trait Input

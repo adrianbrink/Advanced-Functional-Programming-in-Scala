@@ -25,7 +25,7 @@ sealed trait Stream[+A] {
       case Cons(h,t) => t()
   }
 
-  def foldRight[B] (z : =>B) (f :(A, =>B) => B) :B = this match {
+  def foldRight[B] (z: =>B) (f: (A, =>B) => B): B = this match {
       case Empty => z
       case Cons (h,t) => f (h(), t().foldRight (z) (f))
       // Note 1. f can return without forcing the tail
@@ -97,7 +97,7 @@ sealed trait Stream[+A] {
       foldRight(empty[B])((x, xs) => cons(p(x), xs))
     }
 
-    def filter(p: A => Boolean): Stream[B] = {
+    def filter(p: A => Boolean): Stream[A] = {
       foldRight(empty[A])((x, xs) => 
         if (p(x)) cons(x, xs)
         else xs)
@@ -153,11 +153,25 @@ object Stream {
   //   }
   // }
   
-  val fibs = {
+  def fibs(): Stream[Int] = {
+    def go(val1: Int, val2: Int): Stream[Int] = {
+      cons(val1, go(val1, val1+val2))
+    }
+    go(0, 1)
+  }
+  
+  val fib = {
     def fib(val1: Int, val2: Int): Stream[Int] = {
       cons(val1, fib(val1, val1+val2))
     }
     fib(0, 1)
+  }
+
+  def unfold[A, S](z: S)(f: S => Option[(A, S)]): Stream[A] = {
+    f(z) match {
+      case Some((a, s)) => cons(a, unfold(s)(f))
+      case None => empty
+    }
   }
 }
 
