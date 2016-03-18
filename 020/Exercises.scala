@@ -4,6 +4,7 @@
 //
 // AUTHOR1: Andrea Bitzili - abit@itu.dk
 // AUTHOR2: Adrian Brink - adbr@itu.dk
+// Group number: 43
 //
 // Write names and ITU email addresses of both group members that contributed to
 // the solution of the exercise (in alphabetical order by family name).

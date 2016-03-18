@@ -1,3 +1,11 @@
+// FINAL
+//
+// Advanced Programming, Exercises by A. Wąsowski, IT University of Copenhagen
+//
+// AUTHOR1: Andrea Bitzili - abit@itu.dk
+// AUTHOR2: Adrian Brink - adbr@itu.dk
+// Group number: 43
+
 trait RNG {
   def nextInt: (Int, RNG)
 }
