@@ -1,0 +1,125 @@
+ADVANCED PROGRAMMING. MINIPROJECT 1. Testing & Laziness.
+Andrzej Wąsowski
+
+Read the entire task description before starting to work.
+
+Prepare a single Scala file to be handed in.
+
+1. Implement a test suite, for a subset of the implementation of
+lazy streams.  In particular, tests functions: headOption, take,
+drop, map and append. Testing other functions will not be graded,
+although it might help you catch some bugs.
+
+2. Use a mixture of scenario tests and property tests as you see fit.
+
+3. The file StreamSpecWasowski.scala contains an example of a such
+a mixed test suite, exploiting ScalaTest's ability to include
+property testing in ScalaCheck.  Examine this file before starting
+to work.
+
+The tests are run by issuing "sbt test" (or "sbt ~test") in the
+directory containing this README file.
+
+The test file contains two example properties. For each of the
+properties the main source directory
+(src/main/scala/fpinscala/laziness) contains a witness
+implementation violating the property (a buggy implementation).
+
+The file stream00/Stream.scala contains the book implementation of
+lazy Streams.  This should pass all our tests.
+
+The file stream01/Stream.scala contains an example that violates
+property 01.  The file stream02/Stream.scala contains an example
+that violates property 02.  Both of these files should fail a
+test. Try to run these tests and check!
+
+To switch the file you are testing, uncomment a suitable import in
+the top of the StreamSpecWasowski file.  Note, that if you comment
+out all imports, you are testing the standard library's
+implementation of Streams (which is not what we want to do).
+
+The build.sbt file is already set up for linking ScalaTest and
+ScalaCheck's into your program.  If you keep the same setup your
+testing environment will be very similar to my grading
+environment, which will decrease chances of incompatibilities.
+
+The grading environment is automatic, so please refrain from
+making changes that would break it (for instance moving tests to
+another testing framework, etc.) More details on the format below.
+
+4. What properties to test?
+
+For headOption:
+- DONE - it should return None on an empty stream;  (already included in
+  the examples)
+- DONE - it should return some for a non-empty stream;  (already included
+  in the examples)
+- headOption should not force the tail of the stream.
+
+For take:
+- take should not force any heads nor any tails of the Stream it
+  manipulates
+- take(n) does not force (n+1)st head ever (even if we force all
+  elements of take(n))
+- s.take(n).take(n) == s.take(n) for any Stream s and any n
+  (idempotency)
+
+For drop:
+- s.drop(n).drop(m) == s.drop(n+m) for any n, m (additivity)
+- s.drop(n) does not force any of the dropped elements heads
+- the above should hold even if we force some stuff in the tail
+
+For map:
+- x.map(id) == x (where id is the identity function)
+- map terminates on infinite streams
+
+For append:
+- propose properties yourself
+
+I will test the effectiveness of your spec, by providing several
+broken and correct implementations for the above functions and
+measuring your success rate.  The results of my testing will be
+translated to a grade.
+
+
+5. How to prepare your hand-in file?
+
+Create your own spec file by renaming the file and the test class,
+so that it is suffixed with your ITU email account names.  The
+test must be in a single file StreamSpecUsername1Username2.scala
+and contain a single class
+fpinscala.laziness.StreamSpecUsername1Username2. For instance:
+fpinscala.laziness.StreamSpecWasowskiSestoft
+
+The tested class must be in fpinscala.laziness package, otherwise the
+test will fail to compile and your solution will not be accepted.
+
+The test spec should assume that the type Stream and members of
+its companion object are available in scope. So do not navigate to
+packages explicitly to access them. I will manipulate your file,
+by changing the imported implementation of Streams, so the only
+access to the implementation must be through the imports on top of
+the file (like in the example).
+
+You should write both scenario tests and property tests.
+
+It is a good idea to test on infinite streams, and probably a good
+idea to provide your own stream generator, but technically
+speaking it is possible without such a generator, just
+inconvenient. Your test suite should work on stream00.Stream and
+fail on stream01.Stream as shown here (of course not
+simultaneously, but with exactly one of the imports uncommented).
+
+It is fine if a test just lets an exception be thrown without
+interception (in the failing case).  If an exception is thrown
+without being caught, we shall consider that the test has failed
+(so a bug has been detected).
+
+You are only handing in the spec file. You are not handing any
+implementations that you are using for testing (I will provide my
+own mischievous errors for grading).
+
+Please keep your files 80 characters wide, not wider.
+
+IMPORTANT: Only one ASCII file, with .scala extension will be
+accepted.  No .zip files, no pdfs.

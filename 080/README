@@ -1,0 +1,12 @@
+Call the following sbt commands to tinker with this project:
+
+sbt compile      - to build the project
+sbt test         - to run the scalacheck tests
+sbt ~test        - to run the tests in a continous loop, whenever files change
+sbt console      - to drop into REPL with a suitable classpath setup for your project
+sbt test:console - drop into REPL with classpath configured for testing classes
+sbt clean        - remove sbt generated files
+
+There are only 2 tests that are run for the 'sbt test' task on the empty
+template files for the question.  When you solve all exercises there will be
+20-25 of these tests in total.
