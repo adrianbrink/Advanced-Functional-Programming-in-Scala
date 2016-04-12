@@ -1,0 +1,37 @@
+ADVANCED PROGRAMMING.
+Recursion and Pure Data Structures on the Example of Finger Trees
+Andrzej Wąsowski
+
+Read the paper Hinze and Paterson on "Finger trees: a simple general-purpose
+data structure".
+
+Solve the preparatory exercises before starting to work.
+
+We train the following skills during this exercise:
+
+- Reimplementing some design based on a description in a research paper in the
+  area of data structures
+- Implementing persistent pure data structures without pointer/reference manipulation (obviously).
+- Using polymorphic recursions, and advanced types to enforce complex properties.
+- Property testing a new kind of data operations.
+- Reflecting on differences between two programming languages: Haskell and Scala
+
+Only hand in FingerTree.scala and FingerTreeSpec.scala in learnIT.
+
+Implement Finger Trees by completing the implementation in FingerTree.scala.  I
+recommend that you do not fill in the file top-down, but rather do it in the
+order in which things are explained in the paper.  So I suggest to read
+sections 1--3, and fill in Scala implementations as you go.
+
+The FingerTreeSpec.scala file has some tests.  These tests will work if you
+will complete the generators of FingerTree structures.  Feel free to add more
+tests, if you spot some other properties.
+
+In both files large parts are commented out, since initially, before you fill
+in the gaps the files would not compile. You need to uncomment new parts in
+each of the files as you proceed.
+
+My entire implementation for Finger Trees was below 200 lines.  The generators
+for Finger Trees test cases took 10-20 lines in total.  Once you add the tests,
+the Spec file will about double in size.  If you are seriously above this, you
+are likely off track. Ask for help.
