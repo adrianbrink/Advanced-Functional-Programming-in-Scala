@@ -78,8 +78,8 @@ object data {
 
     // page 7
     //
-    // override def empty =  ...
-    // override def nonEmpty = ...
+    override def empty = true
+    override def nonEmpty = false
   }
   case class Single[A] (data: A) extends FingerTree[A]
   // paramter names: pr - prefix, m - middle, sf - suffix
