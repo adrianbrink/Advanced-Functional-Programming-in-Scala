@@ -1,0 +1,50 @@
+ADVANCED PROGRAMMING. MINIPROJECT 2. Monads
+
+Read the entire task description before starting to work.
+
+We train the following skills during this exercise:
+
+- Reimplementing some design based on a description in a research paper in the
+  area of programming languages (this is useful thesis preparation work, and
+  later preparation for bringing research into your professional career.)
+- Using monads (obviously)
+- Implementing simple evaluators for expressions in functional style
+- Understanding how monads capture different side effects in an evaluator
+- Understanding how exception handling is done in programming languages
+
+
+Read the two first sections of "Monads for functional programming" by Phil
+Wadler (linked from the course's website).
+
+The paper's main point is that monads allow bringing some imperative
+programming style into functional programming, so functional programs are easy
+to modify in situations where imperative programs are easy to modify.  It
+emphasizes how different side effects can be implemented in a referentially
+transparent manner, all in similar style. So we also learn how different
+programming language features can be modeled.
+
+The paper does not attempt to reuse monadic implementations across types
+(reusing the same functions in different monads) like we did in our earlier
+exercises, and like the scalaz library does.  In this project we will stick to
+the paper, and not attempt any reuse (there will be a lot of copy-paste
+programming).
+
+In this mini project we implement the evaluator for a simple term language 8
+times. There are four variations: basic, with exceptions, counting divisions,
+logging messages. We implement the four evaluations once directly and once in
+monadic style.  Open file src/main/scala/adpro/monads/Term.scala and solve all
+the tasks directly there.  They are positioned top down, in order (you just
+need to fill in the gaps).
+
+The TermSpec.scala file in the testing part of the project can be used to test
+your solutions.  It only has very few tests.  Feel free to add more, if you
+need.
+
+In both files large parts are commented out, since initially, before you fill
+in the gaps the files would not compile. You need to uncomment new parts in
+each of the files as you proceed.
+
+My entire solution was below 300 lines. If you are above this, you are likely
+off track. Ask for feedback.
+
+Only hand in Term.scala (zipped files and other files will be rejected by the automatic grader).

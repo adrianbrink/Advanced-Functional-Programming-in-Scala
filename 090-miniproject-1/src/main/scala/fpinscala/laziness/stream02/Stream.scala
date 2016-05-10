@@ -93,8 +93,10 @@ trait Stream[+A] {
       if (f(h)) cons(h,t)
       else      empty)
 
-  def headOption: Option[A] =
-    foldRight(None: Option[A])((h,_) => Some(h))
+  def headOption: Option[A] = 
+    this match { case Cons(h, t) => val head = foldRight(None: Option[A])((h,_) => Some(h)); t(); head
+     case Empty  => None
+   }
 
   def map[B](f: A => B): Stream[B] =
     foldRight(empty[B])((h,t) => cons(f(h), t))

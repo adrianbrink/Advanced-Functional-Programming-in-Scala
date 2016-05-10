@@ -231,11 +231,12 @@ case class Prop (run :(TestCases,RNG) => Result) {
 
    def || (that :Prop) :Prop = Prop {
             (testCases, rng) => run(testCases, rng) match {
+                                      case Passed => Passed
+                                      Proved => Passed
                                       case Falsified(fails, succ) =>  that.run(testCases, rng) match {
                                                                                      case Falsified(fails1, succ1) => Falsified(fails1 + fails, succ1 + succ)
                                                                                      case _ => Passed
                                                                       }
-                                      case _ => Passed
                                 }
            }
 

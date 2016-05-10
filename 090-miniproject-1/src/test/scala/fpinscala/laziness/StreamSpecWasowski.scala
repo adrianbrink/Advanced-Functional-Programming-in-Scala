@@ -19,7 +19,7 @@ import stream00._    // uncomment to test the book solution
 //import stream01._ // uncomment to test the broken headOption implementation
 //import stream02._ // uncomment to test another version that breaks headOption
 
-class StreamSpecAbitAdbr extends FlatSpec with Checkers {
+class StreamSpecWasowski extends FlatSpec with Checkers {
 
   import Stream._
   // An example generator of random finite non-empty streams
@@ -141,5 +141,7 @@ class StreamSpecAbitAdbr extends FlatSpec with Checkers {
       ((mapStream[Int, Int](s1)(e => e/0)).append(mapStream[Int, Int](s2)(e => e/0))).isInstanceOf[Stream[Int]]//To return a Boolean
     }
     }
-    
+   } 
+   
+   
 }

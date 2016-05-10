@@ -3,7 +3,7 @@ package fpinscala.laziness.stream00
 import Stream._
 trait Stream[+A] {
 
- // The natural recursive solution
+  The natural recursive solution
   def toListRecursive: List[A] = this match {
     case Cons(h,t) => h() :: t().toListRecursive
     case _ => List()
