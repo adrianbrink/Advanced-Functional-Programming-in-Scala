@@ -56,7 +56,7 @@ object Lenses {
 
   // page 6 in Foster et al.:
 
-  // val l2 : Lens[String, (String,Int)] = TODO
+  val l2 : Lens[String, (String,Int)] = Lens[String, (String, Int)]((_, 0))(t => _ => t._1) 
 
   // page 7 in Foster et al.
 
