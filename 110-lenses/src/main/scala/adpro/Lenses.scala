@@ -60,7 +60,7 @@ object Lenses {
 
   // page 7 in Foster et al.
 
-  val l3 : Lens[(String,Int), String] = (._1)(s1 => t => if(t._1 == s1)t._2 else t._2 + 1 )
+  val l3 : Lens[(String,Int), String] = Lens[(String,Int), String] (_._1) (s1 => t => if(t._1 == s1)(s1, t._2) else (s1, t._2 + 1)) 
 
 
 
